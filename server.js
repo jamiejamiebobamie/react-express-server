@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello World' })
 })
 
+
 // A simple route that returns a JSON object
 // Test this route with:
 app.get('/about', (req, res) => {
@@ -24,17 +25,27 @@ app.get('/about', (req, res) => {
 })
 
 // Random number route
-// Test this route with: http://localhost:4000/random?n=99
+// Test this route with: http://localhost:4000/random/99
 // Where n=99 sets the range of the random number returned
-app.get('/random', (req, res) => {
-  const { n } = req.query
+app.get('/random/:n', (req, res) => {
+  const { n } = req.params;
   const value = random(n)
   res.json({ value })
 })
 
-// /random?n=3&s=6
-app.get('/randomrolls', (req, res) => {
-  const { n, s } = req.query
+// /random/die/6 returns value from 1 to 6
+app.get('/random/die/:n', (req, res) => {
+  const { n } = req.params;
+  const value = randomD(n)
+  res.json({ value })
+})
+
+// /random/dice/3/3
+// n == number of dice
+// s == dice sides
+app.get('/random/dice/:n/:s', (req, res) => {
+  const { n, s } = req.params;
+  // const { n, s } = req.query
   const rolls = randomRolls(n, s)
   res.json({ rolls }) // { "rolls": [1,2,3] }
 })

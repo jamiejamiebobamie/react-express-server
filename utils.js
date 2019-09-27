@@ -1,17 +1,19 @@
 /* eslint-disable semi */
 
 function random(n) {
-  return Math.random() * n
+  return Math.floor(Math.random() * n)
 }
 
 function randomD(n) {
-  
-  return 0
+  return Math.floor(Math.random() * (n)) + 1;
 }
 
 function randomRolls(n, s) {
-
-  return []
+  const result = []
+  for (let i = 0; i < n; i += 1) {
+    result.push(randomD(s))
+  }
+  return result
 }
 
 module.exports.random = random
