@@ -1,6 +1,7 @@
 /* eslint-disable semi */
 const express = require('express')
 const bodyParser = require('body-parser')
+const fetch = require('node-fetch')
 
 const { random, randomD, randomRolls } = require('./utils')
 
@@ -49,6 +50,17 @@ app.get('/random/dice/:n/:s', (req, res) => {
   const rolls = randomRolls(n, s)
   res.json({ rolls }) // { "rolls": [1,2,3] }
 })
+
+
+app.get('/pokemon/:pokemon', (req, res) => {
+  const { pokemon } = req.params;
+  const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+console.log(url)
+  fetch(url).then((poke) => {
+      console.log(poke,'hey')
+    res.json({ poke })
+  })
+});
 
 const port = 4000
 app.listen(port, () => console.log(`LISTENING ON PORT ${port}`))
