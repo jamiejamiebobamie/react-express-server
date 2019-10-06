@@ -2,6 +2,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const fetch = require('node-fetch')
+require('dotenv').config()
 
 const { random, randomD, randomRolls } = require('./utils')
 
@@ -54,11 +55,21 @@ app.get('/random/dice/:n/:s', (req, res) => {
 
 app.get('/pokemon/:pokemon', (req, res) => {
   const { pokemon } = req.params;
-  const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
-console.log(url)
-  fetch(url).then((poke) => {
-      console.log(poke,'hey')
-    res.json({ poke })
+  const apikey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY
+  // const apikey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY
+  console.log(apikey)
+  const url = `https://api.openweathermap.org/data/2.5/forecast?zip=${pokemon},us&appid=${apikey}`
+// console.log(url)
+// {
+//   temp: 70,
+//   short: "Short description",
+//   long: "A long and more detailed description of the weather",
+//   humidity: 10,
+// }
+  fetch(url).then((res) => {
+      console.log(res,'hey')
+      // return res.json()
+    res.json({ res })
   })
 });
 
