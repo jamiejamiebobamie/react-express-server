@@ -53,12 +53,10 @@ app.get('/random/dice/:n/:s', (req, res) => {
 })
 
 
-app.get('/pokemon/:pokemon', (req, res) => {
-  const { pokemon } = req.params;
+app.get('/weather/:zip', (req, res) => {
+  const { zip } = req.params;
   const apikey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-  // const apikey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-  console.log(apikey)
-  const url = `https://api.openweathermap.org/data/2.5/forecast?zip=${pokemon},us&appid=${apikey}`
+  const url = `https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&appid=${apikey}`
 // console.log(url)
 // {
 //   temp: 70,
@@ -66,10 +64,12 @@ app.get('/pokemon/:pokemon', (req, res) => {
 //   long: "A long and more detailed description of the weather",
 //   humidity: 10,
 // }
-  fetch(url).then((res) => {
-      console.log(res,'hey')
-      // return res.json()
-    res.json({ res })
+  fetch(url).then((response) => {
+    response.json().then((info) => {
+        console.log(info)
+        res.json({ info })
+        // return info
+    })
   })
 });
 
